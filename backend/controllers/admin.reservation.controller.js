@@ -1,10 +1,12 @@
 import Reservation from "../models/admin.reservation.model.js";
 import {verificarConflito} from "../services/admin.reservation.services.js"
 
+const CODIGO_INICIAL = "00001";
+
 const gerarCodigoReserva = async () => {
     const ultimaReserva = await Reservation.findOne().sort({codigoReserva: -1}).limit(1);
 
-    let novoCodigo = "00001";
+    let novoCodigo = CODIGO_INICIAL;
     if(ultimaReserva && ultimaReserva.codigoReserva) {
         const ultimoNumero = parseInt(ultimaReserva.codigoReserva);
         novoCodigo = (ultimoNumero + 1).toString().padStart(5, "0");
